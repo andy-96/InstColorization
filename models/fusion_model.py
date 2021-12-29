@@ -93,6 +93,7 @@ class FusionModel(BaseModel):
 
     def setup_to_test(self, fusion_weight_path):
         GF_path = os.path.join(os.path.split(__file__)[0], '..', 'checkpoints/{0}/latest_net_GF.pth'.format(fusion_weight_path))
+        print(os.path.exists(GF_path))
         print('load Fusion model from %s' % GF_path)
         GF_state_dict = torch.load(GF_path)
         
