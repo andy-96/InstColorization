@@ -92,18 +92,19 @@ class FusionModel(BaseModel):
         io.imsave(path, img_as_ubyte(out_img))
 
     def setup_to_test(self, fusion_weight_path):
-        GF_path = os.path.join(os.path.split(__file__)[0], '..', 'checkpoints/{0}/latest_net_GF.pth'.format(fusion_weight_path))
+        root_path = os.path.join(os.path.split(__file__)[0], '..')
+        GF_path = os.path.join(root_path, 'checkpoints/{0}/latest_net_GF.pth'.format(fusion_weight_path))
         print(os.path.exists(GF_path))
         print('load Fusion model from %s' % GF_path)
         GF_state_dict = torch.load(GF_path)
         
         # G_path = 'checkpoints/coco_finetuned_mask_256/latest_net_G.pth' # fine tuned on cocostuff
-        G_path = 'checkpoints/{0}/latest_net_G.pth'.format(fusion_weight_path)
+        G_path = os.path.join(root_path, 'checkpoints/{0}/latest_net_G.pth'.format(fusion_weight_path))
         G_state_dict = torch.load(G_path)
 
         # GComp_path = 'checkpoints/siggraph_retrained/latest_net_G.pth' # original net
         # GComp_path = 'checkpoints/coco_finetuned_mask_256/latest_net_GComp.pth' # fine tuned on cocostuff
-        GComp_path = 'checkpoints/{0}/latest_net_GComp.pth'.format(fusion_weight_path)
+        GComp_path = os.path.join(root_path, 'checkpoints/{0}/latest_net_GComp.pth'.format(fusion_weight_path))
         GComp_state_dict = torch.load(GComp_path)
 
         self.netGF.load_state_dict(GF_state_dict, strict=False)
