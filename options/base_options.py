@@ -2,8 +2,7 @@ import argparse
 import os
 from ..util import util
 import torch
-import models
-import data
+from .. import models, data
 
 
 class BaseOptions():
