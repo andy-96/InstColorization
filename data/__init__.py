@@ -2,30 +2,20 @@ import importlib
 import torch.utils.data
 from .base_data_loader import BaseDataLoader
 from .base_dataset import BaseDataset
+from .aligned_dataset import AlignedDataset
+from .single_dataset import SingleDataset
 
 
 def find_dataset_using_name(dataset_name):
     # Given the option --dataset_mode [datasetname],
     # the file "data/datasetname_dataset.py"
     # will be imported.
-    dataset_filename = "data." + dataset_name + "_dataset"
-    datasetlib = importlib.import_module(dataset_filename)
+    dataset_dict = {
+        'aligned': AlignedDataset,
+        'single': SingleDataset
+    }
 
-    # In the file, the class called DatasetNameDataset() will
-    # be instantiated. It has to be a subclass of BaseDataset,
-    # and it is case-insensitive.
-    dataset = None
-    target_dataset_name = dataset_name.replace('_', '') + 'dataset'
-    for name, cls in datasetlib.__dict__.items():
-        if name.lower() == target_dataset_name.lower() \
-           and issubclass(cls, BaseDataset):
-            dataset = cls
-
-    if dataset is None:
-        print("In %s.py, there should be a subclass of BaseDataset with class name that matches %s in lowercase." % (dataset_filename, target_dataset_name))
-        exit(0)
-
-    return dataset
+    return dataset_dict[dataset_name]
 
 
 def get_option_setter(dataset_name):
