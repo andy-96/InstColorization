@@ -2,8 +2,8 @@ import os
 
 import torch
 from collections import OrderedDict
-from util.image_pool import ImagePool
-from util import util
+from .util.image_pool import ImagePool
+from .util import util
 from .base_model import BaseModel
 from . import networks
 import numpy as np
