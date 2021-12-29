@@ -7,7 +7,7 @@ import torch
 import torch.utils.data as Data
 import torchvision.transforms as transforms
 
-from image_util import *
+from .image_util import *
 
 
 class Fusion_Testing_Dataset(Data.Dataset):
